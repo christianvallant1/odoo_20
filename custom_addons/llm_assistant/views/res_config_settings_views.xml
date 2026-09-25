@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.llm.assistant</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block name="integration" position="after">
+                <block title="AI Assistant" name="llm_assistant_setting_container">
+                    <setting id="llm_assistant_server" string="AI Server" help="Any server with an OpenAI-compatible chat API, such as Ollama, vLLM, llama.cpp or LM Studio">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="llm_assistant_base_url" string="URL" class="col-lg-3 o_light_label"/>
+                                <field name="llm_assistant_base_url" placeholder="http://localhost:11434/v1"/>
+                            </div>
+                            <div class="row mt16">
+                                <label for="llm_assistant_model" string="Model" class="col-lg-3 o_light_label"/>
+                                <field name="llm_assistant_model" placeholder="e.g. qwen3:8b"/>
+                            </div>
+                            <div class="row mt16">
+                                <label for="llm_assistant_api_key" string="API Key" class="col-lg-3 o_light_label"/>
+                                <field name="llm_assistant_api_key" password="True" placeholder="Only if the server requires one"/>
+                            </div>
+                            <button name="action_llm_assistant_test_connection" type="object" string="Test Connection" class="btn-link mt8"/>
+                        </div>
+                    </setting>
+                    <setting id="llm_assistant_answers" string="Answers" help="Limits for each answer of the assistant">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="llm_assistant_timeout" string="Timeout (s)" class="col-lg-3 o_light_label"/>
+                                <field name="llm_assistant_timeout"/>
+                            </div>
+                            <div class="row mt16">
+                                <label for="llm_assistant_max_steps" string="Max Steps" class="col-lg-3 o_light_label"/>
+                                <field name="llm_assistant_max_steps"/>
+                            </div>
+                            <div class="row mt16">
+                                <label for="llm_assistant_instructions" string="Instructions" class="col-lg-3 o_light_label"/>
+                                <field name="llm_assistant_instructions" placeholder="e.g. Amounts are in EUR. Call customers clients."/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="llm_assistant_blocked_models" string="Blocked Models" help="Models the assistant can never read or change, on top of the built-in list (credentials, access rights, technical settings)">
+                        <field name="llm_assistant_blocked_models" placeholder="e.g. hr.employee*, account.move*"/>
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
+
+</odoo>

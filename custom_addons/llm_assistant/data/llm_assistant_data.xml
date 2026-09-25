@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- archived like OdooBot's partner, so that it stays out of contact lists -->
+    <record id="partner_assistant" model="res.partner">
+        <field name="name">AI Assistant</field>
+        <field name="active" eval="False"/>
+        <field name="image_1920" type="bytes" file="llm_assistant/static/img/assistant.png"/>
+    </record>
+
+    <record id="ir_cron_llm_assistant_jobs" model="ir.cron">
+        <field name="name">AI Assistant: Answer Chat Messages</field>
+        <field name="model_id" ref="model_llm_assistant_job"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_process_jobs()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+    </record>
+
+</odoo>

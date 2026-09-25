@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_llm_assistant_proposal_user,llm.assistant.proposal user,llm.assistant.proposal,base.group_user,cr,"[('user_id', '=', user.id)]"
+access_llm_assistant_proposal_system,llm.assistant.proposal system,llm.assistant.proposal,base.group_system,rd,
+access_llm_assistant_job_user,llm.assistant.job user,llm.assistant.job,base.group_user,r,"[('user_id', '=', user.id)]"
+access_llm_assistant_job_system,llm.assistant.job system,llm.assistant.job,base.group_system,rd,

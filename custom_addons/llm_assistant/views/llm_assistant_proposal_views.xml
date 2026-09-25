@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="llm_assistant_proposal_view_list" model="ir.ui.view">
+        <field name="name">llm.assistant.proposal.view.list</field>
+        <field name="model">llm.assistant.proposal</field>
+        <field name="arch" type="xml">
+            <list create="false" decoration-info="state == 'pending'" decoration-danger="state == 'failed'" decoration-muted="state == 'rejected'">
+                <field name="create_date" string="Proposed On"/>
+                <field name="name"/>
+                <field name="res_model_description"/>
+                <field name="source"/>
+                <field name="user_id" groups="base.group_system"/>
+                <field name="state" widget="badge" decoration-info="state == 'pending'" decoration-success="state == 'done'" decoration-danger="state == 'failed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="llm_assistant_proposal_view_form" model="ir.ui.view">
+        <field name="name">llm.assistant.proposal.view.form</field>
+        <field name="model">llm.assistant.proposal</field>
+        <field name="arch" type="xml">
+            <form string="Proposal" create="false" edit="false">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary" invisible="state != 'pending'"/>
+                    <button name="action_reject" string="Reject" type="object" invisible="state != 'pending'"/>
+                    <button name="action_open_records" string="Open Records" type="object" invisible="state != 'done' or operation == 'unlink'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pending,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <div class="alert alert-danger" role="alert" invisible="not error">
+                        <field name="error"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="operation"/>
+                            <field name="res_model_description"/>
+                            <field name="user_id"/>
+                        </group>
+                        <group>
+                            <field name="source"/>
+                            <field name="create_date" string="Proposed On"/>
+                            <field name="handled_date" invisible="not handled_date"/>
+                        </group>
+                    </group>
+                    <field name="description" invisible="not description"/>
+                    <field name="preview"/>
+                    <notebook groups="base.group_no_one">
+                        <page string="Technical Details" name="technical_details">
+                            <field name="technical_details"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="llm_assistant_proposal_view_search" model="ir.ui.view">
+        <field name="name">llm.assistant.proposal.view.search</field>
+        <field name="model">llm.assistant.proposal</field>
+        <field name="arch" type="xml">
+            <search string="Proposals">
+                <field name="name"/>
+                <field name="res_model"/>
+                <field name="user_id"/>
+                <filter string="To Confirm" name="filter_pending" domain="[('state', '=', 'pending')]"/>
+                <filter string="My Proposals" name="filter_mine" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter string="Odoo Chat" name="filter_chat" domain="[('source', '=', 'chat')]"/>
+                <filter string="MCP Client" name="filter_mcp" domain="[('source', '=', 'mcp')]"/>
+                <group>
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+                    <filter string="Model" name="groupby_res_model" context="{'group_by': 'res_model'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="llm_assistant_proposal_action" model="ir.actions.act_window">
+        <field name="name">Proposals</field>
+        <field name="res_model">llm.assistant.proposal</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_pending': 1, 'search_default_filter_mine': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No proposal to confirm</p>
+            <p>When the AI Assistant wants to create, change or delete records, it proposes the change here. Nothing happens until you confirm it.</p>
+        </field>
+    </record>
+
+</odoo>

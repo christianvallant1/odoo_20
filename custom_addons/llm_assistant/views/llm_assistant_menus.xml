@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="llm_assistant_action_open_chat" model="ir.actions.server">
+        <field name="name">Chat with the AI Assistant</field>
+        <field name="model_id" ref="mail.model_discuss_channel"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_llm_assistant_open_chat()</field>
+    </record>
+
+    <menuitem id="llm_assistant_menu_root" name="AI Assistant" web_icon="llm_assistant,static/description/icon.png" sequence="95" groups="base.group_user">
+        <menuitem id="llm_assistant_menu_chat" name="Chat" action="llm_assistant_action_open_chat" sequence="10"/>
+        <menuitem id="llm_assistant_proposal_menu" name="Proposals" action="llm_assistant_proposal_action" sequence="20"/>
+        <menuitem id="llm_assistant_menu_configuration" name="Configuration" sequence="100" groups="base.group_system">
+            <menuitem id="llm_assistant_menu_settings" name="Settings" action="base_setup.action_general_configuration" sequence="10"/>
+            <menuitem id="llm_assistant_job_menu" name="Answers" action="llm_assistant_job_action" sequence="20"/>
+        </menuitem>
+    </menuitem>
+
+</odoo>

@@ -1,0 +1,26 @@
+<section class="container">
+    <h2 class="text-center">AI Assistant</h2>
+    <p class="lead text-center">
+        Chat with a self-hosted LLM that looks up your Odoo data and proposes changes you confirm.
+    </p>
+
+    <h3>Two ways to talk to it</h3>
+    <ul>
+        <li><strong>Odoo chat:</strong> write to <em>AI Assistant</em> in Discuss, like you write to OdooBot.</li>
+        <li><strong>MCP:</strong> external AI apps connect to <code>/llm_assistant/mcp</code> with an API key of scope <em>AI Assistant (MCP)</em>.</li>
+    </ul>
+
+    <h3>Safe by design</h3>
+    <ul>
+        <li>Every tool runs with the rights of the user the assistant works for.</li>
+        <li>Creating, changing and deleting records, or clicking buttons, only creates a proposal. Nothing happens until that user confirms it.</li>
+        <li>Credentials, API keys, access rights and technical settings are off limits, and you can block more models.</li>
+    </ul>
+
+    <h3>Works with your LLM server</h3>
+    <p>
+        Any server with an OpenAI-compatible chat API and tool calling: Ollama, vLLM, llama.cpp, LM Studio or a
+        hosted provider. Set it up in <em>Settings &gt; General Settings &gt; AI Assistant</em>.
+    </p>
+    <p>See <code>README.md</code> in the module folder for setup and security notes.</p>
+</section>
