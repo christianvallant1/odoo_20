@@ -96,6 +96,8 @@ EOF
     chown root:odoo "$CONF"
     chmod 640 "$CONF"
 fi
+# Odoo 20 only listens on 127.0.0.1 unless told otherwise: open it to the host
+grep -q '^http_interface' "$CONF" || sed -i '/^\[options\]/a http_interface = 0.0.0.0' "$CONF"
 
 if [[ "$SKIP_OLLAMA" != 1 ]]; then
     step "Installing Ollama and downloading $LLM_MODEL (a few GB)"
